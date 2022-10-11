@@ -1,0 +1,1 @@
+declare module 'monaco-jsx-highlighter'; //no types file for this 

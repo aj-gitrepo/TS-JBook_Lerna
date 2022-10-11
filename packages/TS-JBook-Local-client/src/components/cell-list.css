@@ -1,0 +1,22 @@
+/* 
+  50vh - margin at the bottom to allow users to scroll down and to avoid resizing bottom margin to 0
+  after dragging the cell
+*/
+
+.cell-list {
+  margin: 0 30px 50vh;
+}
+
+/* 
+  Whenever a code cell is resized the body element gets the classname of 
+  '.react-draggable-transparent-selection'
+
+  this is to prevent the edge snaps when dragging the code cell down
+  (it snap shuts or snap opens teh code cell)
+
+  adding a margin to the cell list at the bottom while dragging
+*/
+
+.react-draggable-transparent-selection .cell-list {
+  margin-bottom: 100vh;
+}

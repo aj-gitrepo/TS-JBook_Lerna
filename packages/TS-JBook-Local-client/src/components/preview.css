@@ -1,0 +1,43 @@
+.preview-wrapper {
+  position: relative;
+  height: 100%;
+  flex-grow: 1;
+  /* to increase size on resizing */
+}
+
+.preview-wrapper iframe {
+  height: 100%;
+  width: 100%;
+  /* to adjust according to resize */
+}
+
+.preview-error {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: red;
+}
+
+/* .react-draggable-transparent-selection .preview-wrapper:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+} */
+
+/* OR */
+
+.react-draggable-transparent-selection iframe {
+  pointer-events: none;
+}
+
+/*
+
+: after - you're adding in a pseudo element here, an after element essentially adds in kind of a fake DOM element into the DOM. So we can use this to kind of show some content on top of the iFrame right now css is going to show this extra little element at all times. we'll add in another selector to this thing to make sure that we only show this after element when a user is actively dragging on one of these little Drager things. (the dragger initially didn't work on top of the iframe)
+
+react-dragable-transparent-selection - from console inspector, this class appears while dragging the resizableBox
+
+*/
