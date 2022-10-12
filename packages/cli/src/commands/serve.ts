@@ -1,3 +1,4 @@
+import path from 'path';
 import { Command } from 'commander';
 import { serve } from 'local-api';
 
@@ -7,6 +8,12 @@ export const serveCommand = new Command()
   .option('-p, --port <number>', 'port to run server on', '4005')
   .action((filename = 'notebook.js', options: {port: string}) => { //options based on option
     console.log("Getting ready to serve a file!");
+    console.log(
+      path.join(process.cwd(), path.dirname(filename))
+    );
+    console.log(
+      path.basename(filename)
+    );
     serve(parseInt(options.port), filename, '/');
   });
 
@@ -29,3 +36,18 @@ export const serveCommand = new Command()
 // >node index.js serve book.js -p 5000 
 // >node index.js serve -p 5000 book.js
 
+// if the user gives the path along with the file name, 
+// inorder to return only the directory name excluding the file name
+// path.dirname(filename)
+// eg. jbook serve js-notes/notbook.js - gives only js-notes/ (gives abs path)
+
+// basename just gives the filename
+
+// assume there is a notes directory
+// >node index.js serve notes/notebook.js
+  // Getting ready to serve a file!
+  // C:\all\typescript react\sec21\jbook\packages\cli\dist\notes
+  // notebook.js
+  // serving traffic on port 4005
+  // saving/fetching cells from notes/notebook.js
+  // that file is in dir /
