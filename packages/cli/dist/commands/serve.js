@@ -2,13 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.serveCommand = void 0;
 const commander_1 = require("commander");
+const local_api_1 = require("local-api");
 exports.serveCommand = new commander_1.Command()
     .command('serve [filename]')
     .description('Open a file for editing')
     .option('-p, --port <number>', 'port to run server on', '4005')
     .action((filename = 'notebook.js', options) => {
     console.log("Getting ready to serve a file!");
-    console.log(filename, options);
+    (0, local_api_1.serve)(parseInt(options.port), filename, '/');
 });
 // define what to do when a user runs 'serve' command
 // option('-p, --port <number>', 'port to run server on', '4005')
@@ -18,6 +19,7 @@ exports.serveCommand = new commander_1.Command()
 // [] - optional value
 // <> - required value
 // filename = 'notebook.js' - default file name
+// in dist directory of cli folder
 // >node index.js serve - take default val for filename and port
 // >node index.js serve book.js
 // >node index.js serve book.js --port 5000
