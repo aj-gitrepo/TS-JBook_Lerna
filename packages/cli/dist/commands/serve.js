@@ -13,9 +13,8 @@ exports.serveCommand = new commander_1.Command()
     .option('-p, --port <number>', 'port to run server on', '4005')
     .action((filename = 'notebook.js', options) => {
     console.log("Getting ready to serve a file!");
-    console.log(path_1.default.join(process.cwd(), path_1.default.dirname(filename)));
-    console.log(path_1.default.basename(filename));
-    (0, local_api_1.serve)(parseInt(options.port), filename, '/');
+    const dir = path_1.default.join(process.cwd(), path_1.default.dirname(filename));
+    (0, local_api_1.serve)(parseInt(options.port), path_1.default.basename(filename), dir);
 });
 // define what to do when a user runs 'serve' command
 // option('-p, --port <number>', 'port to run server on', '4005')
@@ -37,6 +36,16 @@ exports.serveCommand = new commander_1.Command()
 // path.dirname(filename)
 // eg. jbook serve js-notes/notbook.js - gives only js-notes/ (gives abs path)
 // basename just gives the filename
+// .action((filename = 'notebook.js', options: {port: string}) => { //options based on option
+//   console.log("Getting ready to serve a file!");
+//   console.log(
+//     path.join(process.cwd(), path.dirname(filename))
+//   );
+//   console.log(
+//     path.basename(filename)
+//   );
+//   serve(parseInt(options.port), filename, '/');
+// });
 // assume there is a notes directory
 // >node index.js serve notes/notebook.js
 // Getting ready to serve a file!
@@ -45,3 +54,4 @@ exports.serveCommand = new commander_1.Command()
 // serving traffic on port 4005
 // saving/fetching cells from notes/notebook.js
 // that file is in dir /
+// >node index.js serve notebook.js

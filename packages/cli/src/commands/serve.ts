@@ -8,13 +8,8 @@ export const serveCommand = new Command()
   .option('-p, --port <number>', 'port to run server on', '4005')
   .action((filename = 'notebook.js', options: {port: string}) => { //options based on option
     console.log("Getting ready to serve a file!");
-    console.log(
-      path.join(process.cwd(), path.dirname(filename))
-    );
-    console.log(
-      path.basename(filename)
-    );
-    serve(parseInt(options.port), filename, '/');
+    const dir = path.join(process.cwd(), path.dirname(filename))
+    serve(parseInt(options.port), path.basename(filename), dir);
   });
 
 // define what to do when a user runs 'serve' command
@@ -43,6 +38,16 @@ export const serveCommand = new Command()
 
 // basename just gives the filename
 
+// .action((filename = 'notebook.js', options: {port: string}) => { //options based on option
+//   console.log("Getting ready to serve a file!");
+//   console.log(
+//     path.join(process.cwd(), path.dirname(filename))
+//   );
+//   console.log(
+//     path.basename(filename)
+//   );
+//   serve(parseInt(options.port), filename, '/');
+// });
 // assume there is a notes directory
 // >node index.js serve notes/notebook.js
   // Getting ready to serve a file!
@@ -51,3 +56,5 @@ export const serveCommand = new Command()
   // serving traffic on port 4005
   // saving/fetching cells from notes/notebook.js
   // that file is in dir /
+
+// >node index.js serve notebook.js
