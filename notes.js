@@ -171,3 +171,5 @@
 
 // >cd local-client
 // >yarn run build
+
+// >lerna add local-client --scope=local-api

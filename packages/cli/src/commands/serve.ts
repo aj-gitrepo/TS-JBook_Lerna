@@ -6,6 +6,9 @@ interface LocalApiError {
   code: string;
 }
 
+const isProduction = process.env.NODE_ENV === 'production'; 
+// when deploying in NPM process.env.NODE_ENV will be replaced with 'production'
+
 export const serveCommand = new Command()
   .command('serve [filename]')
   .description('Open a file for editing')
@@ -17,7 +20,7 @@ export const serveCommand = new Command()
     }; 
     try { //incase the user opens the existing port
       const dir = path.join(process.cwd(), path.dirname(filename))
-      await serve(parseInt(options.port), path.basename(filename), dir);
+      await serve(parseInt(options.port), path.basename(filename), dir, !isProduction);
       console.log(`Opened ${filename}. Navigate to http://locathost:${options.port} to edit the file`)
     } catch (err: any) {
       if (isLocalApiError(err)) {

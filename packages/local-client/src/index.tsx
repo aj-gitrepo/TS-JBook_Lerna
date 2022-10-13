@@ -12,6 +12,8 @@ const App = () => {
   return (
     <Provider store={store}>
       <div>
+        {/* to test if development mode in express is working */}
+        {/* <h1>TEST</h1> */}
         <CellList />
       </div>
     </Provider>
