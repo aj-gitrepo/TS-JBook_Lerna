@@ -7,8 +7,9 @@ exports.serve = void 0;
 const express_1 = __importDefault(require("express"));
 const serve = (port, filename, dir) => {
     const app = (0, express_1.default)();
-    app.listen(port, () => {
-        console.log('Listening on port', port);
+    // to enable the try catch block (in cli/serve.ts) to work
+    return new Promise((resolve, reject) => {
+        app.listen(port, resolve).on('error', reject);
     });
 };
 exports.serve = serve;

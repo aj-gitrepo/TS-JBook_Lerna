@@ -128,3 +128,43 @@
 // >lerna add @types/cors --dev --scope=local-api
 // >lerna add http-proxy-middleware --scope=local-api
 
+// In the upcoming lecture, we will be completing the catch handler of our serve.ts file. You will have likely noticed some TS errors: error TS2571: Object is of type 'unknown'. We will need to solve this by adding a type guard, as well as adding a type predicate. 
+
+// To resolve, make the following changes:
+
+// 1) Add an interface:
+
+//     interface LocalApiError {
+//       code: string;
+//     }
+
+// 2) Add a function to return the predicate:
+
+//     ...
+     
+//       .action(async (filename = "notebook.js", options: { port: string }) => {
+     
+//         const isLocalApiError = (err: any): err is LocalApiError => {
+//           return typeof err.code === "string";
+//         };
+     
+//     ...
+
+// 3) Update the catch block to use the type guards:
+
+//     ...
+     
+//         } catch (err) {
+//           if (isLocalApiError(err)) {
+//             if (err.code === "EADDRINUSE") {
+//               console.error("Port is in use. Try running on a different port.");
+//             }
+//           } else if (err instanceof Error) {
+//             console.log("Heres the problem", err.message);
+//           }
+//           process.exit(1);
+//         }
+//       });
+     
+//     ...
+
