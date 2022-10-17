@@ -1,4 +1,5 @@
 import { Dispatch } from "redux"; //for async actions using redux thunk
+import axios from "axios";
 
 import { ActionTypes } from "../action-types";
 import { 
@@ -8,9 +9,10 @@ import {
   MoveCellAction, 
   InsertCellAfterAction, 
 } from "../actions";
-import { CellTypes } from "../cell";
+import { Cell, CellTypes } from "../cell";
 import { Direction } from "../actions";
 import bundler from "../../bundler";
+import { RootState } from "../reducers";
 
 export const updateCell = (id: string, content: string): UpdateCellAction => {
   return {
@@ -67,6 +69,40 @@ export const createBundle = (id: string, input: string) => async(dispatch: Dispa
     },
   });
 
+}
+
+export const fetchCells = () => async (dispatch: Dispatch<Action>) => {
+  dispatch({ type: ActionTypes.FETCH_CELLS });
+  try {
+    const { data }: { data: Cell[]} = await axios.get('/cells');
+
+    dispatch({
+      type: ActionTypes.FETCH_CELLS_COMPLETE,
+      payload: data
+    });
+  } catch (err) {
+    if(err instanceof Error) {
+      dispatch({
+        type: ActionTypes.FETCH_CELLS_ERROR,
+        payload: err.message,
+      });
+    }
+  }
+}
+
+export const saveCells = () => async (dispatch: Dispatch<Action>, getState: () => RootState) => { //getState to get order and data from RootState
+  const { cells: {data, order}, } = getState();
+  const cells = order.map((id) => data[id]); //array of Cells
+  try {
+    await axios.post('/cells', { cells }); //cells: cells
+  } catch (err) {
+    if(err instanceof Error) {
+      dispatch({
+        type: ActionTypes.SAVE_CELLS_ERROR,
+        payload: err.message,
+      });
+    }
+  };
 }
 
 

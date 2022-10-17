@@ -22,15 +22,41 @@ const initialState: CellsState = {
 
 const reducer = produce((state: CellsState = initialState, action: Action) => {
   switch (action.type) {
+    case ActionTypes.SAVE_CELLS_ERROR:
+      state.error = action.payload;
+      return;
+
+    case ActionTypes.FETCH_CELLS:
+      state.loading = true;
+      state.error = null;
+      return;
+
+    case ActionTypes.FETCH_CELLS_COMPLETE:
+      state.loading = false;
+      state.error = null;
+      state.order = action.payload.map(cell => cell.id);
+      state.data = action.payload.reduce((acc, cell) => { //acc- accumulator obj to which we are reducing
+        acc[cell.id] = cell;
+        return acc;
+      }, {} as CellsState['data']); //{}initial value for acc
+      return;
+
+    case ActionTypes.FETCH_CELLS_ERROR:
+      state.loading = false;
+      state.error = action.payload;
+      return;
+      
     case ActionTypes.UPDATE_CELL:
       const { id, content } = action.payload;
       state.data[id].content = content;
       return; //immer returns state //here state is used(not requi) to avoid ts returning type undefined
+
     case ActionTypes.DELETE_CELL:
       delete state.data[action.payload]; //updating data obj
       state.order = state.order.filter((id) => id !== action.payload); //updating array
 
       return;
+
     case ActionTypes.MOVE_CELL:
       const { direction } = action.payload;
       const index = state.order.findIndex((id) => id === action.payload.id);
@@ -44,6 +70,7 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
       state.order[targetIndex] = action.payload.id;
 
       return;
+
     case ActionTypes.INSERT_CELL_AFTER:
       const cell: Cell = { //default cell
         content: '',
@@ -61,6 +88,7 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
         state.order.splice(foundIndex + 1, 0, cell.id);
       }
       return;
+
     default:
       return;
   }
@@ -94,3 +122,4 @@ export default reducer;
 
 // toString(36) -  this thing to is going to be filled with numbers and letters. All the numbers from zero to nine, all the letters from A to Z. We're then going to take just a portion of the string that we get back.
 
+// We're going to use the reduce function in this case. You might remember that the reduced function is somewhat similar to MAP, but rather than iterating over every single element inside of an array and returning a new array, we're going to instead iterate over every element and we're going to add in some new data to some kind of new number or string or object or array or something like that.
