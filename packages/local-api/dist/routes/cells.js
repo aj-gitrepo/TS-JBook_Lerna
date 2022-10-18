@@ -20,7 +20,7 @@ const createCellsRouter = (filename, dir) => {
     const router = express_1.default.Router();
     router.use(express_1.default.json()); //body parsing middleware
     const fullPath = path_1.default.join(dir, filename);
-    router.get('cells', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    router.get('/cells', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //  to add a type guard and type predicate
         const isLocalApiError = (err) => {
             return typeof err.code === "string";
@@ -49,7 +49,7 @@ const createCellsRouter = (filename, dir) => {
             }
         }
     }));
-    router.post('cells', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    router.post('/cells', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Take the list of cells from the request obj
         // serialize them (list of cells has id, content and type )
         const { cells } = req.body;

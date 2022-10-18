@@ -10,7 +10,10 @@ const path_1 = __importDefault(require("path"));
 const cells_1 = require("./routes/cells");
 const serve = (port, filename, dir, useProxy) => {
     const app = (0, express_1.default)();
+    // if this doesn't work then go to proxy middleware
+    app.use((0, cells_1.createCellsRouter)(filename, dir)); //to fetchCells
     // for development using app in port 3000, now if 4005 is opend the app opens
+    // Now, whenever a request comes in, we're going to first try to match it inside that router and if it doesn't match, then we'll follow through to our middleware.
     if (useProxy) {
         app.use((0, http_proxy_middleware_1.createProxyMiddleware)({
             target: 'http://localhost:3000',
@@ -23,7 +26,6 @@ const serve = (port, filename, dir, useProxy) => {
         const packagePath = require.resolve('local-client/build/index.html'); //helps to get to th file using algorithm
         app.use(express_1.default.static(path_1.default.dirname(packagePath))); //path uptill /build
     }
-    app.use((0, cells_1.createCellsRouter)(filename, dir));
     // to enable the try catch block (in cli/serve.ts) to work
     return new Promise((resolve, reject) => {
         app.listen(port, resolve).on('error', reject);

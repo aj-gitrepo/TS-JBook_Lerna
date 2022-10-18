@@ -18,7 +18,7 @@ export const createCellsRouter = (filename: string, dir: string) => {
 
   const fullPath = path.join(dir, filename);
 
-  router.get('cells', async (req, res) => {
+  router.get('/cells', async (req, res) => {
     //  to add a type guard and type predicate
     const isLocalApiError = (err: any): err is LocalApiError => {
       return typeof err.code === "string";
@@ -47,7 +47,7 @@ export const createCellsRouter = (filename: string, dir: string) => {
     }
   });
 
-  router.post('cells', async (req, res) => {
+  router.post('/cells', async (req, res) => {
     // Take the list of cells from the request obj
     // serialize them (list of cells has id, content and type )
     const { cells }: { cells: Cell[] } = req.body;
