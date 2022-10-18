@@ -1,6 +1,6 @@
 {
   "name": "ajnote",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "bin": "dist/index.js",
   "publishConfig": {
     "access": "public"
@@ -14,10 +14,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@ajnote/local-client": "^1.0.0"
+    "@ajnote/local-client": "^2.0.0"
   },
   "devDependencies": {
-    "@ajnote/local-api": "^1.0.0",
+    "@ajnote/local-api": "^2.0.0",
     "@types/node": "^18.8.4",
     "commander": "^9.4.1",
     "esbuild": "0.8.26",
