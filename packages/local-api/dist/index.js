@@ -23,7 +23,7 @@ const serve = (port, filename, dir, useProxy) => {
     }
     else {
         // for production - to serve the react app
-        const packagePath = require.resolve('local-client/build/index.html'); //helps to get to th file using algorithm
+        const packagePath = require.resolve('@ajnote/local-client/build/index.html'); //helps to get to th file using algorithm
         app.use(express_1.default.static(path_1.default.dirname(packagePath))); //path uptill /build
     }
     // to enable the try catch block (in cli/serve.ts) to work

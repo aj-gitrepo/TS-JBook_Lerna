@@ -1,5 +1,5 @@
 {
-  "name": "cli",
+  "name": "ajnote",
   "version": "1.0.0",
   "scripts": {
     "start": "tsc --watch --preserveWatchOutput"
@@ -7,7 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^9.4.1",
-    "local-api": "^1.0.0"
+    "@ajnote/local-api": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.8.4",

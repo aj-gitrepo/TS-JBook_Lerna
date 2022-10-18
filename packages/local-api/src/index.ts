@@ -22,7 +22,7 @@ export const serve = (port: number, filename: string, dir: string, useProxy: boo
     );
   } else {
     // for production - to serve the react app
-    const packagePath = require.resolve('local-client/build/index.html'); //helps to get to th file using algorithm
+    const packagePath = require.resolve('@ajnote/local-client/build/index.html'); //helps to get to th file using algorithm
     app.use(express.static(path.dirname(packagePath))); //path uptill /build
   }
 

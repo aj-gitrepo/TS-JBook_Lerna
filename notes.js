@@ -173,3 +173,36 @@
 // >yarn run build
 
 // >lerna add local-client --scope=local-api
+
+// section-25
+
+// rename the name in cli's package.js (should be unique in npm registry) as ajnote
+
+// I don't think anyone is going to try to manually install local client onto their machine. The one thing we can do to logically group together these different packages on NPM and just make it very clear to you and I that these packages are all somehow grouped together or used together, is assigned these packages to what is called an organization. Another term for this is to create a scoped package, 
+
+// By naming a package as a scope package, it just makes it very clear that @types/cors, @types/express or somehow related or managed by the same team. So we might want to use a very similar pattern in our case and just make it very clear that local API and local client are somehow tied together in some way
+
+// in npm registry select add organisation select public and hit create
+
+// in the respective package.js files
+// rename local-api as @ajnote/local-api
+// rename local-client as @ajnote/local-client
+
+// to enable the dependencies to work
+// change in cli's package.json
+  // "@ajnote/local-api": "^1.0.0"
+  // change the import statement in serve command (serve.ts)
+  // import { serve } from '@ajnote/local-api';
+
+// change in local-api's package.json
+  // "@ajnote/local-client": "^1.0.0"
+  // change the irequire.resolve in index.ts
+  // const packagePath = require.resolve('@ajnote/local-client/build/index.html');
+
+// to make these changes run
+// >lerna bootstrap
+
+// to make sure everything works properly
+// >yarn start
+// in the dist directory
+// >node index.js serve
