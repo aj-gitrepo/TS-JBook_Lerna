@@ -9,30 +9,22 @@ export const persistMiddleware = ({
 }: { 
   dispatch: Dispatch<Action>; 
   getState: () => RootState 
-}) => {
-  let timer: any; //should be at top
-  return (next: (action: Action) => void) => {
-    return (action: Action) => {
-      next(action);
+}) => 
+  (next: (action: Action) => void) => 
+  (action: Action) => 
+{
+  next(action);
 
-      if(
-        [
-          ActionTypes.MOVE_CELL, 
-          ActionTypes.UPDATE_CELL, 
-          ActionTypes.INSERT_CELL_AFTER, 
-          ActionTypes.DELETE_CELL
-        ].includes(action.type)
-      ) {
-        if(timer) {
-          // if this function runs before the previous timeout runs out, clear the previous timer
-          clearTimeout(timer);
-        }
-        timer = setTimeout(() => {
-          saveCells()(dispatch, getState);
-        }, 250);
-        
-      }
-    }
+  if(
+    [
+      ActionTypes.MOVE_CELL, 
+      ActionTypes.UPDATE_CELL, 
+      ActionTypes.INSERT_CELL_AFTER, 
+      ActionTypes.DELETE_CELL
+    ].includes(action.type)
+  ) {
+    console.log("Now the cells are saved");
+    saveCells()(dispatch, getState);
   }
 };
 
