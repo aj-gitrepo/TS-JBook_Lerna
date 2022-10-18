@@ -206,3 +206,65 @@
 // >yarn start
 // in the dist directory
 // >node index.js serve
+
+// setting up to publish in npm registry
+
+// in cli's package.json
+// add
+  // "files": ["dist"], - the only thing that goes to npm
+  // "bin": "dist/index.js", - to run the file
+  // "publishConfig": {
+  //   "access": "public"
+  // },
+  // "scripts": {
+  //   "start": "tsc --watch --preserveWatchOutput",
+  //   "prepublishOnly": "tsc"
+  // },
+
+  // in index.ts add
+  // #!/usr/bin/env node
+
+// in local-api's package.json
+// add
+  // "files": ["dist"], - the only thing that goes to npm
+  // "publishConfig": {
+  //   "access": "public"
+  // },
+  // "scripts": {
+  //   "start": "tsc --watch --preserveWatchOutput",
+  //   "prepublishOnly": "tsc"
+  // },
+
+// in local-client's package.json
+// add
+  // "files": ["build"], - the only thing that goes to npm
+  // renmae dependencies to devDependecies as only the build folder is going to be used (it is bundled in build) in the other folders we use transpile files so we need dependencies
+  // delete "private": true,
+  // add
+  // "publishConfig": {
+  //   "access": "public"
+  // },
+  // "scripts": {
+  //   "start": "react-scripts start",
+  //   "build": "react-scripts build",
+  //   "test": "react-scripts test",
+  //   "eject": "react-scripts eject",
+  //   "prepublishOnly": "npm run build"
+  // },
+
+// to reduce the size of dependencies that the user may download use edbuild in cli
+// >lerna add esbuild@0.8.26 --exact --dev --scope=ajnote - cli is renamed as ajnote in package.json
+
+// change in cli's package.json
+// "prepublishOnly": "esbuild src/index.ts --platform=node --outfile=dist/index.js --bundle --minify --define:process.env.NODE_ENV='production'"
+// to check if this is working, in cli terminal
+// >yarn run prepublishOnly - 2 warning (no issues)
+
+// now all the dependencies in cli are handled by esbuild, move all dependencies to devDependencies
+// in dependencies add "@ajnote/local-client": "^1.0.0"
+
+// commiting to git is not strictly required
+
+// pushing to npm
+// >lerna publish --no-push - to not push into git while publishing
+// select major 1.0.0 // >y
