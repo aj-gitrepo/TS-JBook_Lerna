@@ -265,6 +265,11 @@
 
 // commiting to git is not strictly required
 
+// remove git from local-client
+// >cd local-client
+// >rm -r -fo .git
+// 
+
 // pushing to npm
 // >lerna publish --no-push - to not push into git while publishing
 // select major 1.0.0 // >y
